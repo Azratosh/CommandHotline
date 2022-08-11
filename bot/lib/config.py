@@ -40,21 +40,21 @@ class Config:
         missing_values = []
 
         for value in mandatory_values:
-            if value not in config:
+            if not config.get(value):
                 missing_values.append(value)
 
-        if "db_credentials" not in config:
+        if not config.get("db_credentials"):
             missing_values += list(mandatory_pg_values)
         else:
             for value in mandatory_pg_values:
-                if value not in config["db_credentials"]:
+                if not config.get("db_credentials"):
                     missing_values.append(f"db_credentials.{value}")
 
-        if "logging" not in config:
+        if not config.get("logging"):
             missing_values += list(mandatory_log_values)
         else:
             for value in mandatory_log_values:
-                if value not in config["logging"]:
+                if not config.get("logging"):
                     missing_values.append(f"logging.{value}")
 
         if missing_values:
@@ -63,10 +63,10 @@ class Config:
             )
 
         cls.token = str(config["token"])
-        cls.owner_id = int(config.get("owner_id", 0))
+        cls.owner_id = int(config.get("owner_id") or 0)
         cls.prefix = str(config["prefix"])
 
-        mentionable = config.get("mentionable", False)
+        mentionable = config.get("mentionable") or False
         if isinstance(mentionable, str):
             cls.mentionable = mentionable.lower() in ("y", "yes", "true")
         else:
