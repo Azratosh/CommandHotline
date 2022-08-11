@@ -1,0 +1,16 @@
+token: your discord bot token goes here
+owner_id: 0123456789
+prefix: "--"
+mentionable: true
+
+
+db_credentials:
+  database: postgres
+  user: postgres
+  password: postgres
+  host: an IP or container name works
+  port: 5432
+
+logging:
+  # Possible: DEBUG, INFO, WARNING
+  level: DEBUG
