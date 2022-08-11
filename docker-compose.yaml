@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres:14
+    container_name: commandhotline-postgres
+
+    environment:
+      - POSTGRES_DB=${PG_DATABASE}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+
+    networks:
+      - commandhotline-back
+
+    ports:
+      - "5432"
+
+    restart: always
+
+  bot:
+    build:
+      context: bot
+    container_name: commandhotline
+
+    env_file:
+      - ./bot.env
+
+    depends_on:
+      - postgres
+    networks:
+      - commandhotline-back
+
+    restart: always
+
+networks:
+  commandhotline-back: {}
