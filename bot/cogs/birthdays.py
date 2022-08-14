@@ -330,7 +330,7 @@ class Birthdays(commands.Cog):
             years_old = relativedelta(today, birthday_date).years
 
             # Don't forget space at the end
-            day = f"{years_old}{util.ordinal_ending(years_old)} "
+            day = f"{years_old}{util.ordinal(years_old)} "
         else:
             day = " "
 
