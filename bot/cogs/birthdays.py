@@ -5,8 +5,6 @@ import random
 import re
 from typing import *
 
-_logger = logging.getLogger(__name__)
-
 from dateutil.relativedelta import relativedelta
 import discord
 from discord.ext import commands, tasks
@@ -15,6 +13,8 @@ import peewee_async
 
 from lib.database import manager, BaseModel
 from lib import util
+
+_logger = logging.getLogger(__name__)
 
 
 class BirthdayParseError(ValueError):
@@ -353,4 +353,4 @@ def setup(bot: commands.Bot):
 
 
 def teardown(bot: commands.Bot):
-    bot.remove_cog("Birthdays")
+    bot.remove_cog(Birthdays.__name__)
