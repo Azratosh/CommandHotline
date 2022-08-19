@@ -18,6 +18,8 @@ services:
       - "5432"
 
     restart: always
+    volumes:
+      - commandhotline-postgres-data:/var/lib/postgresql/data
 
   bot:
     build:
@@ -33,6 +35,9 @@ services:
       - commandhotline-back
 
     restart: always
+
+volumes:
+  commandhotline-postgres-data: {}
 
 networks:
   commandhotline-back: {}
