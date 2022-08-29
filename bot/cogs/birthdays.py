@@ -275,12 +275,16 @@ class Birthdays(commands.Cog):
     @tasks.loop(hours=4)
     async def birthday_cron_notify(self):
         today = datetime.date.today()
+        today_dt = datetime.datetime(today.year, today.month, today.day, 0, 0)
+
+        # NOTE: Should probably just compare by year or so; comparing by datetime
+        #       is just for debugging
 
         query = Birthday.select().where(
-            (Birthday.enabled == True)
+            Birthday.enabled
             & (Birthday.day == today.day)
             & (Birthday.month == today.month)
-            & ((Birthday.last_notified < today) | (Birthday.last_notified.is_null()))
+            & ((Birthday.last_notified < today_dt) | (Birthday.last_notified.is_null()))
         )
 
         result = await peewee_async.select(query)
