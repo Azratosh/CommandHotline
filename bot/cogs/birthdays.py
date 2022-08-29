@@ -277,16 +277,10 @@ class Birthdays(commands.Cog):
         today = datetime.date.today()
 
         query = Birthday.select().where(
-            (Birthday.day == today.day)
+            (Birthday.enabled == True)
+            & (Birthday.day == today.day)
             & (Birthday.month == today.month)
-            & (Birthday.enabled == True)
-            & (
-                (
-                    (Birthday.last_notified.day != today.day)
-                    & (Birthday.last_notified.month != today.month)
-                )
-                | (Birthday.last_notified.is_null())
-            )
+            & ((Birthday.last_notified < today) | (Birthday.last_notified.is_null()))
         )
 
         result = await peewee_async.select(query)
